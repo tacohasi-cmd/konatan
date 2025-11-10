@@ -1,0 +1,484 @@
+# Create a self-contained BOILER ROOM single-file website (HTML+CSS+JS)
+html = r"""<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KONATAN | BOILER ROOM</title>
+<style>
+  :root{
+    --accent:#e24d2b;
+    --accent-2:#ffb36a;
+    --bg:#0d0f10;
+    --panel:#141619;
+    --metal:#2a2f33;
+    --text:#ddd;
+    --muted:#9aa0a6;
+  }
+  /* Reset */
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, "Hiragino Kaku Gothic ProN","Noto Sans JP", "Yu Gothic", Meiryo, sans-serif;
+    color:var(--text);
+    background: radial-gradient(1200px 600px at 30% 100%, rgba(226,77,43,.12), transparent 60%),
+               radial-gradient(900px 500px at 80% 100%, rgba(226,77,43,.08), transparent 60%),
+               #0b0c0e;
+    overflow-x:hidden;
+  }
+
+  /* Subtle noise texture using CSS gradients */
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    pointer-events:none;
+    background:
+      repeating-conic-gradient(from 0deg, rgba(255,255,255,.02) 0 2deg, transparent 2deg 4deg);
+    mix-blend-mode:overlay;
+    opacity:.35;
+  }
+
+  header{
+    position:relative;
+    padding:28px 24px 10px;
+    border-bottom:1px solid #222a;
+    background:linear-gradient(to bottom, rgba(255,255,255,.02), rgba(0,0,0,.25));
+    backdrop-filter: blur(2px);
+  }
+  .brand{
+    display:flex; align-items:center; gap:18px;
+  }
+  .logo{
+    font-size: clamp(28px, 5vw, 48px);
+    letter-spacing:.06em;
+    color:#f3f6f8;
+    font-weight:900;
+    text-transform:uppercase;
+    position:relative;
+    display:inline-block;
+    line-height:1;
+    padding:6px 10px;
+    text-shadow:
+      0 0 3px rgba(255,255,255,.25),
+      0 0 14px rgba(226,77,43,.25);
+  }
+  /* metallic bevel effect */
+  .logo::before, .logo::after{
+    content:""; position:absolute; inset:0;
+    border-radius:2px;
+  }
+  .logo::before{
+    background: linear-gradient(180deg, #d7dde2 0%, #8f9aa3 40%, #dee3e7 55%, #6e7982 100%);
+    -webkit-background-clip:text; background-clip:text;
+    color:transparent;
+    filter: drop-shadow(0 1px 0 #0008) drop-shadow(0 6px 16px rgba(0,0,0,.35));
+    z-index:-1;
+  }
+  .logo em{
+    font-style:normal;
+    display:block;
+    font-size:.46em;
+    letter-spacing:.28em;
+    color:#e6e9ec;
+    text-shadow:none;
+    opacity:.9;
+  }
+
+  nav{
+    margin-top:14px;
+    display:flex; flex-wrap:wrap; gap:8px;
+  }
+  .tab{
+    border:1px solid #2c3136;
+    background: linear-gradient(#1a1e22, #14171a);
+    color:var(--text);
+    padding:10px 14px;
+    border-radius:8px;
+    font-weight:600;
+    letter-spacing:.05em;
+    cursor:pointer;
+    transition:.2s ease;
+  }
+  .tab:hover{ transform:translateY(-1px); border-color:#3a4046 }
+  .tab.active{ 
+    border-color: var(--accent);
+    box-shadow: 0 0 0 1px var(--accent) inset, 0 0 24px rgba(226,77,43,.25);
+    color:#fff;
+  }
+
+  .hero{
+    position:relative;
+    height: clamp(420px, 65vh, 720px);
+    overflow:hidden;
+    border-bottom:1px solid #222a;
+  }
+
+  /* Steam columns */
+  .steam{ position:absolute; bottom:-10%; width:160%; left:-30%; height:140%; pointer-events:none; filter: blur(10px) contrast(1.1) saturate(1.2); }
+  .steam span{
+    --x:0; --d:18s; --s:1;
+    position:absolute; bottom:-10%;
+    left:var(--x);
+    width: clamp(90px, 10vw, 160px);
+    height: 140%;
+    background: radial-gradient(closest-side, rgba(255,255,255,.06), rgba(255,255,255,.02) 50%, transparent 60%);
+    animation: rise var(--d) linear infinite;
+    transform: scaleX(var(--s));
+    mix-blend-mode: screen;
+  }
+  .steam span:nth-child(1){ --x:8%;  --d:21s; --s:1.3}
+  .steam span:nth-child(2){ --x:22%; --d:18s; --s:1.0}
+  .steam span:nth-child(3){ --x:42%; --d:24s; --s:1.6}
+  .steam span:nth-child(4){ --x:63%; --d:20s; --s:1.2}
+  .steam span:nth-child(5){ --x:80%; --d:26s; --s:1.4}
+  @keyframes rise{
+    from{ transform:translateY(0) scaleX(var(--s)); opacity:.0 }
+    25%{ opacity:.45 }
+    60%{ opacity:.3 }
+    to{ transform:translateY(-85%) scaleX(var(--s)); opacity:0 }
+  }
+
+  .hero-inner{
+    position:relative; height:100%;
+    display:grid; place-items:center;
+    text-align:center;
+  }
+  .gauge{
+    width:min(560px, 86vw);
+    aspect-ratio: 1/1;
+    display:grid; place-items:center;
+    position:relative;
+    z-index:1;
+  }
+  .gauge svg{
+    width:100%; height:auto; display:block;
+    filter: drop-shadow(0 8px 40px rgba(226,77,43,.24));
+  }
+  .percent{
+    position:absolute;
+    font-size: clamp(28px, 5vw, 48px);
+    font-weight:800;
+    letter-spacing:.06em;
+    color:#fff;
+    text-shadow:0 0 18px rgba(226,77,43,.55);
+  }
+
+  .panels{
+    display:grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap:16px;
+    padding:24px;
+    max-width:1200px;
+    margin:0 auto;
+  }
+  .panel{
+    grid-column: span 12;
+    background: linear-gradient(180deg, #15181c, #111416);
+    border:1px solid #23282d;
+    border-radius:14px;
+    padding:20px 18px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.25) inset, 0 2px 10px rgba(0,0,0,.2);
+  }
+  .panel h2{
+    margin:0 0 10px 0;
+    font-size: clamp(18px, 2.8vw, 22px);
+    letter-spacing:.1em;
+    color:#fff;
+  }
+  .muted{ color:var(--muted) }
+
+  /* Two-column layouts on wide screens */
+  @media (min-width:900px){
+    .col-6{ grid-column: span 6 }
+    .col-4{ grid-column: span 4 }
+    .col-8{ grid-column: span 8 }
+  }
+
+  .disc-grid{
+    display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap:14px;
+  }
+  .album{
+    border:1px solid #2c3136; border-radius:12px; overflow:hidden;
+    background:linear-gradient(#191d21,#121416);
+    position:relative;
+  }
+  .album::before{
+    content:""; position:absolute; inset:0;
+    background: radial-gradient(400px 200px at 50% 120%, rgba(226,77,43,.25), transparent 48%);
+    opacity:.6; pointer-events:none;
+  }
+  .album .cover{
+    aspect-ratio:1/1; display:grid; place-items:center; color:#fff;
+    background: radial-gradient(circle at 50% 60%, rgba(226,77,43,.35), rgba(0,0,0,.2) 60%),
+                linear-gradient(180deg, #2a2f33, #171a1d);
+    font-weight:800; letter-spacing:.12em;
+  }
+  .album .meta{ padding:10px 12px }
+  .album b{ display:block; color:#fff }
+  .album small{ color:#9aa0a6 }
+
+  footer{
+    padding:40px 24px 80px;
+    text-align:center;
+    color:#97a0a6;
+    border-top:1px solid #222a;
+    background:linear-gradient(to top, rgba(226,77,43,.06), transparent);
+  }
+  .tagline{
+    font-weight:900; letter-spacing:.14em; text-transform:uppercase;
+    color:#f2f2f2; 
+    text-shadow:0 0 12px rgba(226,77,43,.35);
+  }
+  .cta{
+    margin-top:10px; display:inline-block; padding:10px 14px;
+    border:1px solid #444; border-radius:10px; color:#fff; text-decoration:none;
+    background:linear-gradient(#1b1f22,#121518);
+  }
+</style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <div class="logo">KONATAN <em>BOILER ROOM</em></div>
+    </div>
+    <nav id="nav">
+      <button class="tab active" data-target="news">NEWS</button>
+      <button class="tab" data-target="disc">DISCOGRAPHY</button>
+      <button class="tab" data-target="log">BOILER LOG</button>
+      <button class="tab" data-target="gear">GEAR ROOM</button>
+      <button class="tab" data-target="crew">CREW AREA</button>
+    </nav>
+  </header>
+
+  <section class="hero" aria-label="hero">
+    <!-- rising steam columns -->
+    <div class="steam" aria-hidden="true">
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+
+    <div class="hero-inner">
+      <!-- SVG pressure gauge -->
+      <div class="gauge">
+        <svg viewBox="0 0 300 300" role="img" aria-label="Pressure Gauge">
+          <defs>
+            <radialGradient id="dial" cx="50%" cy="50%" r="65%">
+              <stop offset="0%" stop-color="#0a0d0f"/>
+              <stop offset="70%" stop-color="#121518"/>
+              <stop offset="100%" stop-color="#0a0d0f"/>
+            </radialGradient>
+            <linearGradient id="ring" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#6e7a82"/>
+              <stop offset="40%" stop-color="#3b4248"/>
+              <stop offset="100%" stop-color="#1b1f22"/>
+            </linearGradient>
+            <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+              <feGaussianBlur stdDeviation="6" result="g"/><feMerge>
+                <feMergeNode in="g"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+
+          <!-- outer ring -->
+          <circle cx="150" cy="150" r="145" fill="url(#ring)" stroke="#0f1215" stroke-width="6"/>
+          <!-- dial -->
+          <circle cx="150" cy="150" r="120" fill="url(#dial)" stroke="#292f34" stroke-width="2"/>
+          <!-- ticks -->
+          <g stroke="#a9b2b9" stroke-width="2">
+            <!-- major ticks -->
+            <g id="tick-major">
+              <line x1="150" y1="34" x2="150" y2="54"/>
+            </g>
+            <!-- clone 11 times -->
+            <g>
+              <use href="#tick-major" transform="rotate(30 150 150)"/>
+              <use href="#tick-major" transform="rotate(60 150 150)"/>
+              <use href="#tick-major" transform="rotate(90 150 150)"/>
+              <use href="#tick-major" transform="rotate(120 150 150)"/>
+              <use href="#tick-major" transform="rotate(150 150 150)"/>
+              <use href="#tick-major" transform="rotate(180 150 150)"/>
+              <use href="#tick-major" transform="rotate(210 150 150)"/>
+              <use href="#tick-major" transform="rotate(240 150 150)"/>
+              <use href="#tick-major" transform="rotate(270 150 150)"/>
+              <use href="#tick-major" transform="rotate(300 150 150)"/>
+              <use href="#tick-major" transform="rotate(330 150 150)"/>
+            </g>
+            <!-- minor ticks -->
+            <g id="tick-minor">
+              <line x1="150" y1="40" x2="150" y2="50" stroke="#7d858c" stroke-width="1.2"/>
+            </g>
+            <g>
+              <!-- 60 minor ticks -->
+              <use href="#tick-minor" transform="rotate(6 150 150)"/>
+              <use href="#tick-minor" transform="rotate(12 150 150)"/>
+              <use href="#tick-minor" transform="rotate(18 150 150)"/>
+              <use href="#tick-minor" transform="rotate(24 150 150)"/>
+              <use href="#tick-minor" transform="rotate(36 150 150)"/>
+              <use href="#tick-minor" transform="rotate(42 150 150)"/>
+              <use href="#tick-minor" transform="rotate(48 150 150)"/>
+              <use href="#tick-minor" transform="rotate(54 150 150)"/>
+              <use href="#tick-minor" transform="rotate(66 150 150)"/>
+              <use href="#tick-minor" transform="rotate(72 150 150)"/>
+              <use href="#tick-minor" transform="rotate(78 150 150)"/>
+              <use href="#tick-minor" transform="rotate(84 150 150)"/>
+              <use href="#tick-minor" transform="rotate(96 150 150)"/>
+              <use href="#tick-minor" transform="rotate(102 150 150)"/>
+              <use href="#tick-minor" transform="rotate(108 150 150)"/>
+              <use href="#tick-minor" transform="rotate(114 150 150)"/>
+              <use href="#tick-minor" transform="rotate(126 150 150)"/>
+              <use href="#tick-minor" transform="rotate(132 150 150)"/>
+              <use href="#tick-minor" transform="rotate(138 150 150)"/>
+              <use href="#tick-minor" transform="rotate(144 150 150)"/>
+              <use href="#tick-minor" transform="rotate(156 150 150)"/>
+              <use href="#tick-minor" transform="rotate(162 150 150)"/>
+              <use href="#tick-minor" transform="rotate(168 150 150)"/>
+              <use href="#tick-minor" transform="rotate(174 150 150)"/>
+              <use href="#tick-minor" transform="rotate(186 150 150)"/>
+              <use href="#tick-minor" transform="rotate(192 150 150)"/>
+              <use href="#tick-minor" transform="rotate(198 150 150)"/>
+              <use href="#tick-minor" transform="rotate(204 150 150)"/>
+              <use href="#tick-minor" transform="rotate(216 150 150)"/>
+              <use href="#tick-minor" transform="rotate(222 150 150)"/>
+              <use href="#tick-minor" transform="rotate(228 150 150)"/>
+              <use href="#tick-minor" transform="rotate(234 150 150)"/>
+              <use href="#tick-minor" transform="rotate(246 150 150)"/>
+              <use href="#tick-minor" transform="rotate(252 150 150)"/>
+              <use href="#tick-minor" transform="rotate(258 150 150)"/>
+              <use href="#tick-minor" transform="rotate(264 150 150)"/>
+              <use href="#tick-minor" transform="rotate(276 150 150)"/>
+              <use href="#tick-minor" transform="rotate(282 150 150)"/>
+              <use href="#tick-minor" transform="rotate(288 150 150)"/>
+              <use href="#tick-minor" transform="rotate(294 150 150)"/>
+              <use href="#tick-minor" transform="rotate(306 150 150)"/>
+              <use href="#tick-minor" transform="rotate(312 150 150)"/>
+              <use href="#tick-minor" transform="rotate(318 150 150)"/>
+              <use href="#tick-minor" transform="rotate(324 150 150)"/>
+              <use href="#tick-minor" transform="rotate(336 150 150)"/>
+              <use href="#tick-minor" transform="rotate(342 150 150)"/>
+              <use href="#tick-minor" transform="rotate(348 150 150)"/>
+              <use href="#tick-minor" transform="rotate(354 150 150)"/>
+            </g>
+          </g>
+
+          <!-- red arc -->
+          <path id="arc" d="" fill="none" stroke="#e24d2b" stroke-width="12" filter="url(#glow)" stroke-linecap="round"/>
+          <!-- needle -->
+          <g id="needle" transform="rotate(-90 150 150)">
+            <polygon points="150,50 156,160 144,160" fill="#f0e7e2"/>
+            <circle cx="150" cy="150" r="10" fill="#0e0f10" stroke="#c8caca" stroke-width="2"/>
+          </g>
+          <!-- title -->
+          <text x="150" y="210" text-anchor="middle" fill="#cfd6dc" style="letter-spacing:.15em;font-weight:700">PRESSURE LEVEL</text>
+        </svg>
+        <div class="percent" id="percent">76%</div>
+      </div>
+    </div>
+  </section>
+
+  <main class="panels">
+    <section id="news" class="panel col-8">
+      <h2>NEWS</h2>
+      <p class="muted">・ワールドツアー “BOILING POINT” 東京ドーム公演が映像化決定。<br>
+      ・2nd ALBUM『STEAM NEVER SLEEP』配信開始。<br>
+      ・公式サイト <b>BOILER ROOM</b> 開設記念：限定壁紙＆着信音（スチーム音）を配布中。</p>
+    </section>
+
+    <aside class="panel col-4">
+      <h2>PRESSURE FEED</h2>
+      <p class="muted">現在のサイト圧：<b id="site-psi">1.02 MPa</b><br>
+        来場者の叫び：<i>“Metal was boiled!”</i></p>
+    </aside>
+
+    <section id="disc" class="panel col-12" hidden>
+      <h2>DISCOGRAPHY</h2>
+      <div class="disc-grid">
+        <div class="album">
+          <div class="cover">THE BOILER MAN</div>
+          <div class="meta"><b>KONATAN</b><small> 1st ALBUM</small></div>
+        </div>
+        <div class="album">
+          <div class="cover">STEAM NEVER SLEEP</div>
+          <div class="meta"><b>KONATAN</b><small> 2nd ALBUM</small></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="log" class="panel col-12" hidden>
+      <h2>BOILER LOG</h2>
+      <p class="muted">制作座談会・年表・インタビューなど、圧が上がる読み物を随時掲載。</p>
+    </section>
+
+    <section id="gear" class="panel col-12" hidden>
+      <h2>GEAR ROOM</h2>
+      <p class="muted">ボイラー・ドラムセット、蒸気連動ベースアンプ、耐熱ギターの解説。</p>
+    </section>
+
+    <section id="crew" class="panel col-12" hidden>
+      <h2>CREW AREA</h2>
+      <p class="muted">ファンクラブ“Boiler Crew”会員証の発行、圧ポイントの可視化、限定配布。</p>
+      <a class="cta" href="#">仮登録（デモ）</a>
+    </section>
+  </main>
+
+  <footer>
+    <div class="tagline">PRESSURE NEVER SLEEPS.</div>
+    <div class="muted">© TACOMA RECORDS — KONATAN Official</div>
+  </footer>
+
+<script>
+  // Simple tab system
+  const tabs = document.querySelectorAll('.tab');
+  const sections = ['news','disc','log','gear','crew'].map(id=>document.getElementById(id));
+  tabs.forEach(btn=>btn.addEventListener('click', ()=>{
+    tabs.forEach(t=>t.classList.remove('active'));
+    btn.classList.add('active');
+    sections.forEach(sec=>sec.hidden = (sec.id !== btn.dataset.target));
+    window.scrollTo({top: document.querySelector('header').offsetHeight, behavior:'smooth'});
+  }));
+
+  // Pressure gauge animation
+  const percentEl = document.getElementById('percent');
+  const needle = document.getElementById('needle');
+  const arc = document.getElementById('arc');
+  let value = 76; // starting %
+  function setGauge(v){
+    v = Math.max(0, Math.min(100, v));
+    percentEl.textContent = Math.round(v) + '%';
+    // Map % to angle (-90deg to +90deg)
+    const angle = -90 + (v/100)*180;
+    needle.setAttribute('transform', `rotate(${angle} 150 150)`);
+    // Arc path
+    const r = 102;
+    const start = polarToCartesian(150,150,r, -90);
+    const end = polarToCartesian(150,150,r, angle);
+    const largeArc = v>50 ? 1 : 0;
+    const d = ["M", start.x, start.y, "A", r, r, 0, largeArc, 1, end.x, end.y].join(" ");
+    arc.setAttribute("d", d);
+  }
+  function polarToCartesian(cx, cy, r, deg){
+    const rad = (deg-90) * Math.PI/180.0;
+    return { x: cx + (r * Math.cos(rad)), y: cy + (r * Math.sin(rad)) };
+  }
+  // animate up & down slowly like breathing
+  let dir = 1;
+  setGauge(value);
+  setInterval(()=>{
+    value += dir * (Math.random()*1.6 + 0.6);
+    if(value>96){ dir = -1 }
+    if(value<62){ dir = 1 }
+    setGauge(value);
+  }, 120);
+
+  // Fake site pressure number
+  const psi = document.getElementById('site-psi');
+  setInterval(()=>{
+    const base = 1.00 + Math.sin(Date.now()/1200)/50 + Math.random()/200;
+    psi.textContent = base.toFixed(2) + " MPa";
+  }, 300);
+
+</script>
+</body>
+</html>
+"""
+with open("/mnt/data/boiler_room.html","w", encoding="utf-8") as f:
+    f.write(html)
+"/mnt/data/boiler_room.html"
