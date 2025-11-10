@@ -286,6 +286,45 @@
   font-style: italic;
   margin-top: 1em;
 }
+  /* ===== GEAR ROOM styles ===== */
+.gear-toc{
+  display:flex; flex-wrap:wrap; gap:8px; margin:6px 0 14px;
+}
+.gear-toc a{
+  text-decoration:none; color:#fff; font-weight:700;
+  border:1px solid #343a40; border-radius:8px;
+  padding:8px 12px; background:linear-gradient(#1b1f22,#121518);
+  transition:.2s ease; letter-spacing:.03em;
+}
+.gear-toc a:hover{ border-color:#e24d2b; box-shadow:0 0 16px rgba(226,77,43,.35) }
+
+.gear-article{
+  margin:16px 0 18px;
+  background: linear-gradient(180deg, #15181c, #0f1214);
+  border:1px solid #2b2f33; border-radius:12px;
+  padding:18px 16px;
+  box-shadow: 0 0 24px rgba(226,77,43,.10) inset;
+}
+.gear-article h3{
+  margin:0 0 6px; color:#fff; letter-spacing:.05em;
+  text-shadow:0 0 10px rgba(226,77,43,.35);
+  font-size: clamp(18px, 2.6vw, 22px);
+}
+.gear-lead{
+  margin:.3em 0 1em; color:#ffb36a; font-weight:700;
+}
+.gear-article p{ margin:.6em 0; color:#ddd }
+.gear-article blockquote{
+  margin:.8em 0; padding:8px 12px;
+  border-left:4px solid #e24d2b; color:#cfd3d7; background:rgba(226,77,43,.06);
+  border-radius:4px; font-style:italic;
+}
+
+.gear-note{
+  margin-top:14px; padding:14px 12px;
+  border:1px dashed #3a4046; border-radius:10px;
+  color:#c9ced3; background:linear-gradient(180deg, rgba(226,77,43,.05), rgba(0,0,0,.15));
+}
 </style>
 </head>
 <body>
@@ -543,9 +582,44 @@
 </section>
 
     <section id="gear" class="panel col-12" hidden>
-      <h2>GEAR ROOM</h2>
-      <p class="muted">ボイラー・ドラムセット、蒸気連動ベースアンプ、耐熱ギターの解説。</p>
-    </section>
+  <h2>GEAR ROOM</h2>
+
+  <nav class="gear-toc">
+    <a href="#boiler-drum">Boiler Drum Set</a>
+    <a href="#steam-link-bass">Steam-Link Bass Amp</a>
+    <a href="#thermo-guitar">Thermo-Resist Guitar</a>
+  </nav>
+
+  <article id="boiler-drum" class="gear-article">
+    <h3>Boiler Drum Set（ボイラー・ドラムセット）</h3>
+    <p class="gear-lead">“叩くたびに蒸気が鳴く。tacomaの魂は金属より熱い。”</p>
+    <p>tacomaが使用する伝説のドラムセット。外装はかつて実在した製鉄所の廃ボイラーを再利用して作られており、内部には<strong>高圧蒸気パイプ</strong>が巡らされている。演奏中、バスドラのペダル操作に連動してボイラー内の圧が上昇し、一定値を超えるとスネア裏のノズルから<strong>“蒸気ブレイク”</strong>が噴出。</p>
+    <p>その瞬間、ステージ全体が霧に包まれる。観客はそれを<strong>「Boiler Kick」</strong>と呼び、ライヴの名物として語り継ぐ。</p>
+    <blockquote>tacoma：「俺は叩いてるんじゃない。圧を解放してるだけだ。」</blockquote>
+    <p>伝説によれば、試作機の段階でスタジオの天井が二度抜けたという。耐圧テストでは<strong>NASA規格の熱耐性センサー</strong>が導入され、以降「地球上で唯一、気象庁の監視対象になったドラム」として登録された。</p>
+  </article>
+
+  <article id="steam-link-bass" class="gear-article">
+    <h3>Steam-Link Bass Amp（蒸気連動ベースアンプ）</h3>
+    <p class="gear-lead">“ベースは低音ではなく、圧力で鳴る。”</p>
+    <p>kamisasaが愛用する唯一無二の低音装置。見た目は古びた工業機械だが、内部には<strong>蒸気圧変換型共鳴システム</strong>が搭載されており、演奏時の音圧に応じてタンク内のスチーム量が変動する。</p>
+    <p>音量を上げるほど機体が白く曇り、最高潮に達すると<strong>スチームがビートに合わせて脈動</strong>するという代物。観客の間では、この現象を<strong>「呼吸するアンプ」</strong>と呼ぶ。</p>
+    <blockquote>kamisasa：「このアンプは生きてる。たまに俺より先に息を吸うから怖い。」</blockquote>
+    <p>1回のライヴで平均2リットルの純水を消費。環境省からは「工業機器としての分類が難しい」として、いまだに<strong>楽器ではなく“動力装置”扱い</strong>となっている。</p>
+  </article>
+
+  <article id="thermo-guitar" class="gear-article">
+    <h3>Thermo-Resist Guitar（耐熱ギター）</h3>
+    <p class="gear-lead">“KONATANの手に握られた瞬間、ギターは炎の楽器になる。”</p>
+    <p>KONATAN本人が設計・鋳造した伝説の主武器。ボディは<strong>耐熱合金チタン＝“ヘリオスメタル”</strong>製で、演奏時の摩擦熱によって自ら赤く発光する。内部には温度に応じてトーンが変化する<strong>熱応答コイル</strong>が仕込まれており、最高温度時には<strong>自然発火エフェクト</strong>（火花のような音）を発生。</p>
+    <blockquote>KONATAN：「冷たい音なんて出せねぇんだ。俺の手が触れた時点で、音も燃える。」</blockquote>
+    <p>制作過程で7本が試作されたが5本は溶解。残る2本のうち1本は“THE BOILER MAN”ツアー中にネックが<strong>真っ赤に発光</strong>し、ステージ照明が不要になった伝説がある。現在このギターは“燃える遺産”として国立近代音響博物館に保管されている。</p>
+  </article>
+
+  <div class="gear-note">
+    <strong>編集部注：</strong>「GEAR ROOM」は単なる機材紹介ではなく、<em>KONATANという圧力現象を物質化した聖域</em>である。この3つの装置が、今日もどこかで圧を上げ続けている。— <strong>Pressure Never Sleeps.</strong>
+  </div>
+</section>
 
     <section id="crew" class="panel col-12" hidden>
       <h2>CREW AREA</h2>
