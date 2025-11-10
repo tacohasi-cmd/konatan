@@ -250,6 +250,44 @@ html = r"""<!DOCTYPE html>
     border:1px solid #444; border-radius:10px; color:#fff; text-decoration:none;
     background:linear-gradient(#1b1f22,#121518);
   }
+  .boiler-article {
+  margin-top: 1em;
+  line-height: 1.7;
+  color: #ddd;
+  background: linear-gradient(180deg, #15181b, #0f1113);
+  border: 1px solid #2b2f33;
+  border-radius: 10px;
+  padding: 24px 20px;
+  box-shadow: 0 0 20px rgba(226,77,43,0.1) inset;
+}
+
+.boiler-article h3 {
+  color: #fff;
+  font-size: 1.4em;
+  letter-spacing: 0.05em;
+  text-shadow: 0 0 6px rgba(226,77,43,0.35);
+  margin-top: 0;
+}
+
+.boiler-article h4 {
+  color: #ffb36a;
+  margin-top: 1.2em;
+  border-left: 3px solid #e24d2b;
+  padding-left: 8px;
+  font-size: 1.1em;
+}
+
+.boiler-article p {
+  margin: 0.6em 0;
+}
+
+.boiler-article blockquote {
+  border-left: 4px solid #e24d2b;
+  padding-left: 10px;
+  color: #bbb;
+  font-style: italic;
+  margin-top: 1em;
+}
 </style>
 </head>
 <body>
@@ -427,10 +465,40 @@ html = r"""<!DOCTYPE html>
       </div>
     </section>
 
-    <section id="log" class="panel col-12" hidden>
-      <h2>BOILER LOG</h2>
-      <p class="muted">制作座談会・年表・インタビューなど、圧が上がる読み物を随時掲載。</p>
-    </section>
+<section id="log" class="panel col-12" hidden>
+  <h2>BOILER LOG</h2>
+
+  <article class="boiler-article">
+    <h3>BOILER ROOM特別座談会：KONATAN、蒸気とともに語る。</h3>
+    <p><b>出演：</b>KONATAN（Vo&Gt） / kamisasa（Ba） / tacoma（Dr） / guchinyan（Key）<br>
+    <b>取材・構成：</b>“BOILER ROOM”編集部</p>
+
+    <p>――2ndアルバム『STEAM NEVER SLEEP』完成記念、制作を振り返る座談会。</p>
+
+    <h4>■ アルバム制作、それは「気圧実験」だった。</h4>
+    <p><b>KONATAN：</b> 前作『The Boiler Man』は“火”のアルバムだったけど、今回は“圧”のアルバム。火は一瞬だけど、圧は継続する。だからスタジオも“持続する危険”をテーマにした。</p>
+    <p><b>tacoma：</b> 実際に危険だった（笑）。スタジオに実際のボイラーを2基設置して常時スチームを噴かせてたんだ。途中で天井が膨張して爆発した。</p>
+    <p><b>kamisasa：</b> 湿度が多いとベースのサスティンが“湯気”みたいに伸びるんだよ。湿度がグルーヴを作る。あれは乾いた環境じゃ出せない音。</p>
+
+    <h4>■ 新メンバー・guchinyanの加入、そしてボイラーと格闘する日々。</h4>
+    <p><b>KONATAN：</b> guchinyanは最初から異様だった。冷却ファンを10台持ち込んできたからね。</p>
+    <p><b>guchinyan：</b> だって暑いんですよ！室温が45度ですよ!? キーボード3台溶けました。</p>
+    <p><b>tacoma：</b> でもその気化音が『Crash Chamber』のイントロになった（笑）。</p>
+
+    <h4>■ 収録曲について語る。</h4>
+    <p><b>KONATAN：</b> 『STEAM NEVER SLEEP』は休むな、冷ますな、止めるな。サビで“スチーム！スチーム！”ってシャウトしてるけど、あれ実はguchinyanの悲鳴（笑）。</p>
+    <p><b>kamisasa：</b> 『Crash Chamber』は本当に部屋がクラッシュした曲。事故が先かタイトルが先かもうわからない（笑）。</p>
+    <p><b>tacoma：</b> 『Repair me』はボイラー停止中に録った。圧が止まる瞬間にも音楽はあるって気づいた。</p>
+
+    <h4>■ BOILER ROOM 開設に寄せて。</h4>
+    <p><b>KONATAN：</b> 音を出しても蒸気は止まらない。だから今度は“音のボイラー室”を作った。ここは音も熱も垂れ流しだ。火を絶やすな、スチームを止めるな。</p>
+    <p><b>tacoma：</b> ファンも自分のボイラーを焚け。冷めたらまた戻ってこい。俺たちが再点火してやる。</p>
+    <p><b>KONATAN：</b> ……スチームは、眠らない。</p>
+
+    <blockquote>🔥 編集後記：取材中、再び警報音が鳴った。「配管圧が上がってます！」と叫ぶスタッフを尻目に、KONATANは笑いながら言った。「いいね、記事の締めに爆発音があるとリアルだろ？」</blockquote>
+  </article>
+
+</section>
 
     <section id="gear" class="panel col-12" hidden>
       <h2>GEAR ROOM</h2>
