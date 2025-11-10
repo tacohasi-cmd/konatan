@@ -194,6 +194,21 @@ html = r"""<!DOCTYPE html>
     .col-4{ grid-column: span 4 }
     .col-8{ grid-column: span 8 }
   }
+  .cover img {
+  width: 100%;
+  height: auto;
+  display: block;
+  aspect-ratio: 1 / 1; /* 正方形比率を保つ */
+  object-fit: cover;   /* フレーム内にきれいに収まるように */
+  border-radius: 8px;
+  box-shadow: 0 0 16px rgba(226,77,43,0.35);
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.album:hover img {
+  transform: scale(1.03);
+  box-shadow: 0 0 28px rgba(226,77,43,0.55);
+}
 
   .disc-grid{
     display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap:14px;
