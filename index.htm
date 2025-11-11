@@ -903,6 +903,12 @@ window.addEventListener('scroll', function() {
   } else {
     gauge.style.animation = 'none';
   }
+  const flash = document.getElementById('pressure-flash');
+
+　　if (pressure === 100 && !flash.classList.contains('active')) {
+    flash.classList.add('active');
+    setTimeout(() => flash.classList.remove('active'), 600);
+}
 });
 </script>
 <script>
