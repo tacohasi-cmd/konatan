@@ -906,7 +906,7 @@ window.addEventListener('scroll', function() {
   const totalHeight = rect.height + visibleHeight;
   const scrollPos = Math.min(Math.max((visibleHeight - rect.top) / totalHeight, 0), 1);
 
-  const pressure = Math.round(scrollPos * 120);
+  const pressure = Math.round(scrollPos * 130);
   gauge.style.width = pressure + '%';
   value.textContent = pressure + '%';
 
