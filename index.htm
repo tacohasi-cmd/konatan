@@ -473,9 +473,42 @@
   margin-top: 1.4em;
   border-radius: 4px;
 }
+/* ====== Scroll reveal animation for gear photos ====== */
+.gear-photo-block {
+  opacity: 0;
+  transform: translateY(60px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.gear-photo-block.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+/* ====== Flash effect when pressure reaches MAX ====== */
+#pressure-flash {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(255,255,255,0.9), rgba(255,80,0,0.2), transparent 80%);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 9999;
+  transition: opacity 0.3s ease-out;
+}
+#pressure-flash.active {
+  opacity: 1;
+  animation: flashPulse 0.5s ease-out forwards;
+}
+
+@keyframes flashPulse {
+  0% { opacity: 0; }
+  25% { opacity: 1; }
+  50% { opacity: 0.6; }
+  100% { opacity: 0; }
+}
 </style>
 </head>
 <body>
+  <div id="pressure-flash"></div>
   <header>
     <div class="brand">
       <div class="logo">KONATAN <em>BOILER ROOM(Here is joke site)</em></div>
@@ -871,6 +904,21 @@ window.addEventListener('scroll', function() {
     gauge.style.animation = 'none';
   }
 });
+</script>
+<script>
+// ===== Scroll-triggered fade-in for gear blocks =====
+const gearBlocks = document.querySelectorAll('.gear-photo-block');
+const options = { threshold: 0.2 };
+
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, options);
+
+gearBlocks.forEach(block => revealObserver.observe(block));
 </script>
 </body>
 </html>
