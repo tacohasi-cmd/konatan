@@ -375,44 +375,59 @@
   .gear-photo-block img{ max-height: 400px; }
   .gear-photo-block h3{ font-size: 1.2em; }
 }
-/* ====== Pressure Gauge (scroll-linked animation) ====== */
+/* ====== Fixed Pressure Gauge (追従型) ====== */
 .pressure-gauge {
-  margin: 12px auto 24px;
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9998;
+  width: 240px;
+  background: rgba(12,12,12,0.85);
+  border: 1px solid rgba(226,77,43,0.4);
+  border-radius: 10px;
+  padding: 12px 14px;
+  box-shadow: 0 0 16px rgba(226,77,43,0.25);
+  backdrop-filter: blur(4px);
   text-align: center;
   color: #fff;
-  max-width: 400px;
+  transition: opacity 0.4s ease;
 }
+
 .gauge-label {
   font-weight: 700;
   letter-spacing: 0.1em;
-  margin-bottom: 6px;
   color: #ffb36a;
+  font-size: 0.85em;
+  margin-bottom: 6px;
 }
+
 .gauge-bar {
   width: 100%;
-  height: 20px;
+  height: 16px;
   background: linear-gradient(90deg, #222, #333);
-  border-radius: 10px;
+  border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 0 8px rgba(226,77,43,0.2) inset;
+  box-shadow: 0 0 8px rgba(226,77,43,0.25) inset;
 }
+
 .gauge-fill {
   height: 100%;
   width: 0%;
   background: linear-gradient(90deg, #e24d2b, #ffb36a);
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(226,77,43,0.6);
-  transition: width 0.2s ease-out, background 0.3s ease;
+  transition: width 0.2s ease-out;
 }
+
 .gauge-value {
   margin-top: 4px;
   font-family: monospace;
-  font-size: 1.1em;
+  font-size: 1em;
   color: #ffb36a;
   text-shadow: 0 0 6px rgba(226,77,43,0.4);
 }
 
-/* MAX点滅アニメーション */
+/* 点滅アニメーションは以前のまま利用 */
 @keyframes pressureBlink {
   0%, 50%, 100% { background: linear-gradient(90deg, #e24d2b, #ffb36a); }
   25%, 75% { background: linear-gradient(90deg, #ff0000, #ffa500); }
@@ -763,13 +778,6 @@
 </section>
  <section id="gear" class="panel col-12" hidden>
   <h2>GEAR ROOM</h2>
-   <div class="pressure-gauge">
-  <div class="gauge-label">PRESSURE LEVEL</div>
-  <div class="gauge-bar">
-    <div class="gauge-fill" id="gaugeFill"></div>
-  </div>
-  <div class="gauge-value" id="gaugeValue">0%</div>
-</div>
   <p class="muted">聖具は鳴き、蒸気は歌う。KONATANの伝説を支える三種の神器。</p>
 
   <!-- Boiler Drum -->
@@ -824,6 +832,13 @@
   </main>
 
   <footer>
+    <div class="pressure-gauge">
+  <div class="gauge-label">PRESSURE LEVEL</div>
+  <div class="gauge-bar">
+    <div class="gauge-fill" id="gaugeFill"></div>
+  </div>
+  <div class="gauge-value" id="gaugeValue">0%</div>
+　　</div>
     <div class="tagline">PRESSURE NEVER SLEEPS.</div>
     <div class="muted">© TACOMA RECORDS — KONATAN Official</div>
   </footer>
