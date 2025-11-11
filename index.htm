@@ -696,7 +696,14 @@
         <b>KONATAN</b><small> 2nd ALBUM — STEAM NEVER SLEEP</small>
         </div>
       </div>
-    </section>
+        <div class="pressure-gauge">
+    <div class="gauge-label">TEMPERATURE</div>
+    <div class="gauge-bar">
+      <div class="gauge-fill" id="gaugeFill"></div>
+    </div>
+  <div class="gauge-value" id="gaugeValue">0%</div>
+　</div>
+ </section>
 
 <section id="log" class="panel col-12" hidden>
   <h2>BOILER LOG</h2>
@@ -774,6 +781,13 @@
 ——BOILER ROOM、本日も稼働中。
 </blockquote>
   </article>
+    <div class="pressure-gauge">
+    <div class="gauge-label">TEMPERATURE</div>
+    <div class="gauge-bar">
+      <div class="gauge-fill" id="gaugeFill"></div>
+    </div>
+  <div class="gauge-value" id="gaugeValue">0%</div>
+　</div>
 
 </section>
  <section id="gear" class="panel col-12" hidden>
@@ -823,10 +837,10 @@
     — <strong>Pressure Never Sleeps.</strong>
   </div>
   <div class="pressure-gauge">
-  <div class="gauge-label">PRESSURE LEVEL</div>
-  <div class="gauge-bar">
-    <div class="gauge-fill" id="gaugeFill"></div>
-  </div>
+    <div class="gauge-label">TEMPERATURE</div>
+    <div class="gauge-bar">
+      <div class="gauge-fill" id="gaugeFill"></div>
+    </div>
   <div class="gauge-value" id="gaugeValue">0%</div>
 　</div>
 </section>
@@ -907,7 +921,7 @@ window.addEventListener('scroll', function() {
   const totalHeight = rect.height + visibleHeight;
   const scrollPos = Math.min(Math.max((visibleHeight - rect.top) / totalHeight, 0), 1);
 
-  const pressure = Math.round(scrollPos * 105);
+  const pressure = Math.round(scrollPos * 120);
   gauge.style.width = pressure + '%';
   value.textContent = pressure + '%';
 
