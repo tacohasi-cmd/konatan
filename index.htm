@@ -822,6 +822,13 @@
     <strong>編集部注：</strong>「GEAR ROOM」は単なる機材紹介ではなく、<em>KONATANという圧力現象を物質化した聖域</em>である。この3つの装置が、今日もどこかで圧を上げ続けている。<br>
     — <strong>Pressure Never Sleeps.</strong>
   </div>
+  <div class="pressure-gauge">
+  <div class="gauge-label">PRESSURE LEVEL</div>
+  <div class="gauge-bar">
+    <div class="gauge-fill" id="gaugeFill"></div>
+  </div>
+  <div class="gauge-value" id="gaugeValue">0%</div>
+　</div>
 </section>
 
     <section id="crew" class="panel col-12" hidden>
@@ -835,13 +842,6 @@
     <div class="tagline">PRESSURE NEVER SLEEPS.</div>
     <div class="muted">© TACOMA RECORDS — KONATAN Official</div>
   </footer>
-<div class="pressure-gauge">
-  <div class="gauge-label">PRESSURE LEVEL</div>
-  <div class="gauge-bar">
-    <div class="gauge-fill" id="gaugeFill"></div>
-  </div>
-  <div class="gauge-value" id="gaugeValue">0%</div>
-</div>
 <script>
   // Simple tab system
   const tabs = document.querySelectorAll('.tab');
@@ -907,7 +907,7 @@ window.addEventListener('scroll', function() {
   const totalHeight = rect.height + visibleHeight;
   const scrollPos = Math.min(Math.max((visibleHeight - rect.top) / totalHeight, 0), 1);
 
-  const pressure = Math.round(scrollPos * 100);
+  const pressure = Math.round(scrollPos * 105);
   gauge.style.width = pressure + '%';
   value.textContent = pressure + '%';
 
@@ -942,6 +942,6 @@ gearBlocks.forEach(block => revealObserver.observe(block));
 </script>
 </body>
 </html>
-"""
-with open("/mnt/data/boiler_room.html","w", encoding="utf-8") as f:
-    f.write(html)
+//"""
+///with open("/mnt/data/boiler_room.html","w", encoding="utf-8") as f:
+//    f.write(html)
