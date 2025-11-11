@@ -659,9 +659,10 @@
     const r = 102;
     const start = polarToCartesian(150,150,r, -90);
     const end = polarToCartesian(150,150,r, angle);
-    const largeArc = v>50 ? 1 : 0;
+    //const largeArc = v>50 ? 1 : 0;
+    const largeArc = 0;
     const d = ["M", start.x, start.y, "A", r, r, 0, largeArc, 1, end.x, end.y].join(" ");
-    //arc.setAttribute("d", d);
+    arc.setAttribute("d", d);
   }
   function polarToCartesian(cx, cy, r, deg){
     const rad = (deg-90) * Math.PI/180.0;
