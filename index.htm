@@ -406,6 +406,62 @@
   0%, 50%, 100% { background: linear-gradient(90deg, #e24d2b, #ffb36a); }
   25%, 75% { background: linear-gradient(90deg, #ff0000, #ffa500); }
 }
+/* ====== BOILER LOG背景演出 ====== */
+#log {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(10, 10, 12, 0.9), rgba(15, 16, 18, 0.95)),
+              url("boiler_members_bg.JPG") center/cover no-repeat fixed;
+  border: 1px solid #2a2f33;
+  border-radius: 14px;
+  box-shadow: 0 0 40px rgba(226, 77, 43, 0.15) inset, 0 0 12px rgba(0, 0, 0, 0.6);
+}
+
+/* 蒸気のアニメーション層 */
+#log::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 40% 80%, rgba(255,255,255,0.06), transparent 60%),
+              radial-gradient(circle at 80% 30%, rgba(255,255,255,0.08), transparent 60%);
+  mix-blend-mode: screen;
+  animation: steamMove 20s linear infinite;
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+@keyframes steamMove {
+  from { background-position: 0 0, 0 0; }
+  to { background-position: 100% -50%, -100% 50%; }
+}
+
+/* 本文エリアを浮かせて読みやすく */
+.boiler-article {
+  position: relative;
+  z-index: 2;
+  background: rgba(20, 22, 25, 0.85);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255,255,255,0.05);
+  padding: 24px 22px;
+  border-radius: 10px;
+  box-shadow: 0 0 24px rgba(226, 77, 43, 0.15);
+}
+
+/* タイトル発光強調 */
+.boiler-article h3 {
+  text-shadow: 0 0 12px rgba(226,77,43,0.5), 0 0 30px rgba(255,150,50,0.3);
+}
+
+/* 引用文（編集後記）をメタリックに */
+.boiler-article blockquote {
+  background: linear-gradient(90deg, rgba(226,77,43,0.05), transparent);
+  border-left: 4px solid rgba(226,77,43,0.8);
+  color: #ccc;
+  font-style: italic;
+  padding: 10px 16px;
+  margin-top: 1.4em;
+  border-radius: 4px;
+}
 </style>
 </head>
 <body>
@@ -673,7 +729,7 @@
   <p class="muted">聖具は鳴き、蒸気は歌う。KONATANの伝説を支える三種の神器。</p>
 
   <!-- Boiler Drum -->
-  <div class="gear-photo-block" style="background-image:url('boiler_drum.jpg')">
+  <div class="gear-photo-block" style="background-image:url('boiler_drum.JPG')">
     <div class="overlay">
       <h3>Boiler Drum Set（ボイラー・ドラムセット）</h3>
       <p class="gear-lead">“叩くたびに蒸気が鳴く。tacomaの魂は金属より熱い。”</p>
@@ -685,7 +741,7 @@
   </div>
 
   <!-- Steam-Link Bass -->
-  <div class="gear-photo-block" style="background-image:url('steam_link_bass.jpg')">
+  <div class="gear-photo-block" style="background-image:url('steam_link_bass.JPG')">
     <div class="overlay">
       <h3>Steam-Link Bass Amp（蒸気連動ベースアンプ）</h3>
       <p class="gear-lead">“ベースは低音ではなく、圧力で鳴る。”</p>
@@ -697,7 +753,7 @@
   </div>
 
   <!-- Thermo-Resist Guitar -->
-  <div class="gear-photo-block" style="background-image:url('thermo_resist_guitar.jpg')">
+  <div class="gear-photo-block" style="background-image:url('thermo_resist_guitar.JPG')">
     <div class="overlay">
       <h3>Thermo-Resist Guitar（耐熱ギター）</h3>
       <p class="gear-lead">“KONATANの手に握られた瞬間、ギターは炎の楽器になる。”</p>
@@ -777,6 +833,30 @@
     psi.textContent = base.toFixed(2) + " MPa";
   }, 300);
 
+</script>
+<script>
+window.addEventListener('scroll', function() {
+  const gauge = document.getElementById('gaugeFill');
+  const value = document.getElementById('gaugeValue');
+  const gearSection = document.getElementById('gear');
+  const rect = gearSection.getBoundingClientRect();
+
+  // スクロール率を計算（セクション内のみ）
+  const visibleHeight = window.innerHeight;
+  const totalHeight = rect.height + visibleHeight;
+  const scrollPos = Math.min(Math.max((visibleHeight - rect.top) / totalHeight, 0), 1);
+
+  const pressure = Math.round(scrollPos * 100);
+  gauge.style.width = pressure + '%';
+  value.textContent = pressure + '%';
+
+  // 圧が高まると色が変化
+  if (pressure > 80) {
+    gauge.style.animation = 'pressureBlink 1s infinite';
+  } else {
+    gauge.style.animation = 'none';
+  }
+});
 </script>
 </body>
 </html>
