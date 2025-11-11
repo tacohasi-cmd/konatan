@@ -520,9 +520,99 @@
   50% { opacity: 0.6; }
   100% { opacity: 0; }
 }
+/* ===== IGNITION SCREEN STYLES ===== */
+#ignite-screen {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at center, #0a0a0a 0%, #000 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  z-index: 9999;
+  overflow: hidden;
+  transition: opacity 1s ease-out;
+}
+
+.ignite-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(226,77,43,0.25), rgba(0,0,0,0.9));
+  opacity: 0;
+  transition: opacity 1s ease-in;
+}
+
+.ignite-content {
+  position: relative;
+  text-align: center;
+  color: #fff;
+  z-index: 2;
+  animation: float 3s ease-in-out infinite;
+}
+
+.ignite-logo {
+  font-family: 'Impact', sans-serif;
+  font-size: 4em;
+  color: #ffb36a;
+  letter-spacing: 0.1em;
+  text-shadow: 0 0 20px rgba(226,77,43,0.8);
+}
+
+.ignite-sub {
+  margin: 10px 0 20px;
+  color: #ccc;
+  letter-spacing: 0.1em;
+  font-size: 1em;
+}
+
+#ignite-button {
+  font-family: monospace;
+  font-weight: bold;
+  font-size: 1.2em;
+  letter-spacing: 0.1em;
+  color: #fff;
+  background: linear-gradient(180deg, #e24d2b, #b6321b);
+  border: none;
+  border-radius: 8px;
+  padding: 14px 36px;
+  box-shadow: 0 0 25px rgba(226,77,43,0.5);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+#ignite-button:hover {
+  background: linear-gradient(180deg, #ffb36a, #e24d2b);
+  box-shadow: 0 0 35px rgba(255,100,50,0.8);
+  transform: scale(1.05);
+}
+
+/* 点火アニメーション */
+@keyframes flashBurn {
+  0% { opacity: 0; }
+  30% { opacity: 1; background: radial-gradient(circle at center, rgba(255,255,255,1), rgba(255,100,0,0.5), rgba(0,0,0,0.9)); }
+  100% { opacity: 0; }
+}
+
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+body.ignite-active #ignite-screen {
+  pointer-events: none;
+  opacity: 0;
+}
 </style>
 </head>
 <body>
+<!-- ===== IGNITION SCREEN ===== -->
+<div id="ignite-screen">
+  <div class="ignite-overlay"></div>
+  <div class="ignite-content">
+    <h1 class="ignite-logo">KONATAN</h1>
+    <p class="ignite-sub">PRESS TO IGNITE</p>
+    <button id="ignite-button">IGNITE</button>
+  </div>
+</div>
   <div id="pressure-flash"></div>
   <header>
     <div class="brand">
@@ -938,6 +1028,20 @@ const revealObserver = new IntersectionObserver((entries) => {
 }, options);
 
 gearBlocks.forEach(block => revealObserver.observe(block));
+</script>
+<script>
+const igniteScreen = document.getElementById('ignite-screen');
+const igniteOverlay = document.querySelector('.ignite-overlay');
+const igniteButton = document.getElementById('ignite-button');
+
+igniteButton.addEventListener('click', () => {
+  igniteOverlay.style.opacity = '1';
+  igniteOverlay.style.animation = 'flashBurn 1.2s ease-out';
+  setTimeout(() => {
+    document.body.classList.add('ignite-active');
+    igniteScreen.style.display = 'none';
+  }, 1300);
+});
 </script>
 </body>
 </html>
