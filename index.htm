@@ -601,6 +601,64 @@ body.ignite-active #ignite-screen {
   pointer-events: none;
   opacity: 0;
 }
+/* ===== WORLD TOUR Announcement block ===== */
+.tour-announcement {
+  margin: 1.5em 0 2em;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #15181b, #0f1113);
+  border: 1px solid #2b2f33;
+  box-shadow: 0 0 30px rgba(226,77,43,0.1) inset;
+  padding: 22px 20px;
+}
+
+.tour-announcement h3 {
+  font-size: 1.5em;
+  color: #ffb36a;
+  letter-spacing: 0.04em;
+  margin-top: 0;
+  text-shadow: 0 0 10px rgba(226,77,43,0.4);
+}
+
+.tour-announcement .tagline {
+  color: #ddd;
+  font-weight: 500;
+  margin: 8px 0 14px;
+  line-height: 1.6;
+}
+.tour-announcement .tagline span {
+  color: #ffb36a;
+  font-style: italic;
+}
+
+.tour-visual {
+  position: relative;
+  text-align: center;
+  background: rgba(0,0,0,0.3);
+  border-radius: 8px;
+  padding: 10px;
+  margin: 10px 0 14px;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+.tour-img {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: 6px;
+  opacity: 0.8;
+}
+.tour-visual .caption {
+  margin-top: 6px;
+  font-size: 0.9em;
+  color: #aaa;
+  font-style: italic;
+}
+.announce-note {
+  color: #bbb;
+  font-size: 0.95em;
+  margin-top: 10px;
+  border-left: 3px solid #e24d2b;
+  padding-left: 10px;
+}
 </style>
 </head>
 <body>
@@ -790,7 +848,26 @@ body.ignite-active #ignite-screen {
 
 <section id="log" class="panel col-12" hidden>
   <h2>BOILER LOG</h2>
-
+　<!-- =============================
+       WORLD TOUR 特報ブロック
+  ============================== -->
+  <div class="tour-announcement">
+    <div class="tour-banner">
+      <h3>KONATAN WORLD TOUR ’25 — “PRESSURE OVERDRIVE”</h3>
+      <p class="tagline">🔥 世界が沸騰する準備はできているか。<br>
+      <span>── 圧と音と蒸気が融合する、かつてないライブ体験。</span></p>
+      <div class="tour-visual">
+          <img src="konatan_stage_plan.jpg" alt="KONATAN WORLD TOUR ’25 “The Boiler Man” STAGE PRODUCTION PLAN" class="tour-img">
+          <div class="caption">▲ KONATAN WORLD TOUR ’25 “The Boiler Man” — STAGE PRODUCTION PLAN</div>
+　　　　</div>
+      <p class="announce-note">
+　　　　　　関係者以外閲覧禁止──<br>
+　　　　　　ここに記された構想は、ステージそのものを「ボイラー」に変えるための設計図である。<br>
+　　　　　　火を入れるのは、お前達の歓声だ。
+　　　　</p>
+    </div>
+  </div>
+  
   <article class="boiler-article">
     <h3>BOILER ROOM特別座談会：KONATAN、蒸気とともに語る。</h3>
     <p><b>出演：</b>KONATAN（Vo&Gt） / kamisasa（Ba） / tacoma（Dr） / guchinyan（Key）<br>
