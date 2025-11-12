@@ -659,6 +659,64 @@ body.ignite-active #ignite-screen {
   border-left: 3px solid #e24d2b;
   padding-left: 10px;
 }
+/* ===== TOUR VISUAL画像調整 ===== */
+.tour-visual {
+  position: relative;
+  text-align: center;
+  background: rgba(0,0,0,0.4);
+  border-radius: 8px;
+  padding: 12px;
+  margin: 16px 0;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+.tour-img {
+  width: 100%;
+  height: auto;
+  max-height: 520px;
+  object-fit: contain;   /* トリミングせず全体表示 */
+  display: block;
+  margin: 0 auto;
+  border-radius: 6px;
+  box-shadow: 0 0 24px rgba(226,77,43,0.25);
+}
+.tour-visual .caption {
+  margin-top: 6px;
+  font-size: 0.9em;
+  color: #aaa;
+  font-style: italic;
+}
+
+/* ===== Read More 折りたたみ ===== */
+.tour-article-wrapper {
+  position: relative;
+  max-height: 400px;  /* 初期表示の高さ */
+  overflow: hidden;
+  transition: max-height 0.8s ease;
+}
+.tour-article-wrapper.expanded {
+  max-height: 2000px; /* 展開時の最大高さ */
+}
+.readmore-container {
+  text-align: center;
+  margin-top: 12px;
+}
+.readmore-btn {
+  font-family: monospace;
+  background: linear-gradient(180deg, #e24d2b, #b6321b);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 20px;
+  font-size: 1em;
+  cursor: pointer;
+  box-shadow: 0 0 12px rgba(226,77,43,0.4);
+  transition: all 0.3s ease;
+}
+.readmore-btn:hover {
+  background: linear-gradient(180deg, #ffb36a, #e24d2b);
+  transform: scale(1.05);
+}
 </style>
 </head>
 <body>
@@ -855,16 +913,17 @@ body.ignite-active #ignite-screen {
     <div class="tour-banner">
       <h3>『BOILER ROOM」開設記念　特別企画</h3>
       <p class="tagline">🔥 世界が沸騰する準備はできているか。<br>
-      <span>KONATAN 1stワールドツアー　企画世界初公開。</span></p>
-      <div class="tour-visual">
-          <img src="konatan_stage_plan.JPG" alt="KONATAN WORLD TOUR ’25 “The Boiler Man” STAGE PRODUCTION PLAN" class="tour-img">
-          <div class="caption">▲ KONATAN WORLD TOUR ’25 “The Boiler Man” — STAGE PRODUCTION PLAN</div>
-　　　　</div>
+      <span>KONATAN 1stワールドツアー、企画書の一部を世界初公開。</span></p>
+      <div class="tour-article-wrapper">
+        <div class="tour-visual">
+            <img src="konatan_stage_plan.JPG" alt="KONATAN WORLD TOUR ’25 “The Boiler Man” STAGE PRODUCTION PLAN" class="tour-img">
+            <div class="caption">▲ KONATAN WORLD TOUR ’25 “The Boiler Man” — STAGE PRODUCTION PLAN</div>
+　　  　　</div>
             <!-- 内部資料ページ -->
-      <div class="tour-visual">
-        <img src="konatan_stage_plan_open.JPG" alt="STAGE PRODUCTION PLAN 内部ページ" class="tour-img">
-        <div class="caption">▲ KONATAN WORLD TOUR ’25 “The Boiler Man” — 内部資料ページ（ステージ構成・照明設計図）</div>
-      </div>
+        <div class="tour-visual">
+          <img src="konatan_stage_plan_open.JPG" alt="コンセプトアート" class="tour-img">
+          <div class="caption">▲ KONATAN WORLD TOUR ’25 “The Boiler Man” — コンセプトアート</div>
+        </div>
 
       <!-- 本文（ここに記事を書く） -->
       <article class="tour-article">
@@ -915,6 +974,10 @@ body.ignite-active #ignite-screen {
 　　　　　　ここに記された構想は、ステージそのものを「ボイラー」に変えるための設計図である。<br>
 　　　　　　火を入れるのは、お前達の歓声だ。
 　　　　</p>
+      <!-- 折りたたみボタン -->
+        <div class="readmore-container">
+          <button id="readMoreBtn" class="readmore-btn">続きを読む</button>
+        </div>
     </div>
   </div>
   
@@ -924,7 +987,7 @@ body.ignite-active #ignite-screen {
     <b>取材・構成：</b>“BOILER ROOM”編集部</p>
 
     <p>――2ndアルバム『STEAM NEVER SLEEP』完成記念、制作を振り返る座談会。</p>
-
+  <div class="tour-article-wrapper">
     <h4>■ アルバム制作、それは「気圧実験」だった。</h4>
     <p><b>KONATAN：</b> 前作『The Boiler Man』は“火”のアルバムだったけど、
 今回の『STEAM NEVER SLEEP』は“圧”のアルバム。
@@ -990,6 +1053,10 @@ body.ignite-active #ignite-screen {
     <blockquote>🔥 編集後記：取材中、再び警報音が鳴った。「配管圧が上がってます！」と叫ぶスタッフを尻目に、KONATANは笑いながら言った。「いいね、記事の締めに爆発音があるとリアルだろ？」そして本当に、遠くで“ボンッ”という音が響いた。
 ——BOILER ROOM、本日も稼働中。
 </blockquote>
+    <!-- 折りたたみボタン -->
+        <div class="readmore-container">
+          <button id="readMoreBtn" class="readmore-btn">続きを読む</button>
+        </div>
   </article>
 </section>
  <section id="gear" class="panel col-12" hidden>
@@ -1169,6 +1236,18 @@ igniteButton.addEventListener('click', () => {
     igniteScreen.style.display = 'none';
   }, 1300);
 });
+<script>
+// ===== Read More toggle =====
+const readMoreBtn = document.getElementById('readMoreBtn');
+const articleWrapper = document.querySelector('.tour-article-wrapper');
+
+readMoreBtn.addEventListener('click', () => {
+  articleWrapper.classList.toggle('expanded');
+  readMoreBtn.textContent = articleWrapper.classList.contains('expanded')
+    ? '閉じる'
+    : '続きを読む';
+});
+</script>
 </script>
 </body>
 </html>
